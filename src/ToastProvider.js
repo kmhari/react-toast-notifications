@@ -170,7 +170,7 @@ export class ToastProvider extends Component<Props, State> {
     const { Toast, ToastContainer } = { ...defaultComponents, ...components };
     const { add, remove, removeAll, update } = this;
     const toasts = Object.freeze(this.state.toasts);
-
+    const toastRef = React.useRef(null)
     const hasToasts = Boolean(toasts.length);
     const portalTarget = canUseDOM ? document.body : null; // appease flow
 
@@ -197,9 +197,11 @@ export class ToastProvider extends Component<Props, State> {
                       mountOnEnter
                       timeout={transitionDuration}
                       unmountOnExit
+                      nodeRef={toastRef}
                     >
                       {transitionState => (
                         <ToastController
+                          ref={toastRef}
                           appearance={appearance}
                           autoDismiss={autoDismiss !== undefined ? autoDismiss : inheritedAutoDismiss}
                           autoDismissTimeout={autoDismissTimeout}
